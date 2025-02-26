@@ -21,19 +21,27 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
     // Handles the creation of a new customer
     public async Task<CustomerDto> Handle(CreateCustomerCommand cmd, CancellationToken tkn)
     {
+        Console.WriteLine("Handling CreateCustomerCommand...");
+
+        // Create a new customer entity using the provided command data
         var customer = Customer.Create(cmd.n, cmd.e, cmd.p);
+        Console.WriteLine($"Customer created with Name: {customer.Name}, Email: {customer.Email}, Phone: {customer.Phone}");
 
         try
         {
+            // Attempt to add the new customer to the repository
             await _repository.AddAsync(customer, tkn);
+            Console.WriteLine("Customer successfully added to the repository.");
         }
         catch (Exception ex)
         {
+            // Log any exceptions that occur during the add operation
             Console.WriteLine($"Exception occurred while adding customer: {ex.Message}");
             throw;
         }
 
-        return new CustomerDto(
+        // Return a DTO representing the newly created customer
+        var customerDto = new CustomerDto(
             customer.Id,
             customer.Name,
             customer.Email,
@@ -42,5 +50,8 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
             customer.UpdatedAt,
             customer.IsActive
         );
+
+        Console.WriteLine("Returning CustomerDto...");
+        return customerDto;
     }
 }
