@@ -25,6 +25,9 @@ public class Customer : IEquatable<Customer>
 
     private Customer(string name, string email, string phone) : this()
     {
+        // Log the creation of a new customer
+        Console.WriteLine($"Creating new customer with Name: {name}, Email: {email}, Phone: {phone}");
+
         Id = Guid.NewGuid();
         Name = name;
         Email = email;
@@ -34,10 +37,14 @@ public class Customer : IEquatable<Customer>
         CustomerType = CustomerType.Standard;
         CustomerTier = CustomerTier.Bronze;
         _state = CustomerState.Created;
+
+        // Log the successful creation of a customer
+        Console.WriteLine($"Customer created with ID: {Id}");
     }
 
     public static Customer Create(string name, string email, string phone)
     {
+        // Validate input parameters
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Name is required", nameof(name));
         if (string.IsNullOrWhiteSpace(email))
@@ -45,11 +52,17 @@ public class Customer : IEquatable<Customer>
         if (string.IsNullOrWhiteSpace(phone))
             throw new ArgumentException("Phone is required", nameof(phone));
 
+        // Log the creation request
+        Console.WriteLine($"Request to create customer with Name: {name}, Email: {email}, Phone: {phone}");
+
         return new Customer(name, email, phone);
     }
 
     public void Update(string name, string email, string phone, [CallerMemberName] string updatedBy = null)
     {
+        // Log the update request
+        Console.WriteLine($"Updating customer ID: {Id} by {updatedBy}");
+
         ValidateStateTransition(CustomerState.Updated);
 
         Name = name;
@@ -57,6 +70,9 @@ public class Customer : IEquatable<Customer>
         Phone = phone;
         UpdatedAt = DateTime.UtcNow;
         _state = CustomerState.Updated;
+
+        // Log the successful update
+        Console.WriteLine($"Customer ID: {Id} updated successfully");
 
         AddAuditLog(new CustomerAuditLog(
             Id,
@@ -68,6 +84,9 @@ public class Customer : IEquatable<Customer>
 
     public void Deactivate(string reason, [CallerMemberName] string deactivatedBy = null)
     {
+        // Log the deactivation request
+        Console.WriteLine($"Deactivating customer ID: {Id} by {deactivatedBy} for reason: {reason}");
+
         ValidateStateTransition(CustomerState.Deactivated);
 
         IsActive = false;
@@ -75,6 +94,9 @@ public class Customer : IEquatable<Customer>
         _state = CustomerState.Deactivated;
 
         _metadata.AddOrUpdate("DeactivationReason", reason, (_, _) => reason);
+
+        // Log the successful deactivation
+        Console.WriteLine($"Customer ID: {Id} deactivated successfully");
 
         AddAuditLog(new CustomerAuditLog(
             Id,
@@ -86,7 +108,13 @@ public class Customer : IEquatable<Customer>
 
     public void AddMetadata(string key, object value, [CallerMemberName] string addedBy = null)
     {
+        // Log the metadata addition
+        Console.WriteLine($"Adding/updating metadata '{key}' for customer ID: {Id} by {addedBy}");
+
         _metadata.AddOrUpdate(key, value, (_, _) => value);
+
+        // Log the successful metadata addition
+        Console.WriteLine($"Metadata '{key}' added/updated successfully for customer ID: {Id}");
 
         AddAuditLog(new CustomerAuditLog(
             Id,
@@ -98,6 +126,9 @@ public class Customer : IEquatable<Customer>
 
     private void ValidateStateTransition(CustomerState newState)
     {
+        // Log the state transition validation
+        Console.WriteLine($"Validating state transition from {_state} to {newState} for customer ID: {Id}");
+
         bool isValidTransition = _state switch
         {
             CustomerState.Created => true,
@@ -108,11 +139,20 @@ public class Customer : IEquatable<Customer>
 
         if (!isValidTransition)
             throw new InvalidOperationException($"Invalid state transition from {_state} to {newState}");
+
+        // Log the successful state transition validation
+        Console.WriteLine($"State transition from {_state} to {newState} is valid for customer ID: {Id}");
     }
 
     private void AddAuditLog(CustomerAuditLog log)
     {
+        // Log the addition of an audit log entry
+        Console.WriteLine($"Adding audit log entry for customer ID: {Id}");
+
         _auditLogs.Add(log);
+
+        // Log the successful addition of an audit log entry
+        Console.WriteLine($"Audit log entry added successfully for customer ID: {Id}");
     }
 
     public bool Equals(Customer other)
