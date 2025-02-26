@@ -8,4 +8,4 @@ public interface ICustomerRepository
     Task<Customer> AddAsync(Customer customer, CancellationToken cancellationToken = default);
     Task UpdateAsync(Customer customer, CancellationToken cancellationToken = default);
     Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
-} 
+}
