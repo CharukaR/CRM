@@ -23,6 +23,9 @@ public class Customer : IEquatable<Customer>
 
     private Customer(string name, string email, string phone)
     {
+        // Log the creation of a new customer
+        Console.WriteLine($"Creating a new customer with Name: {name}, Email: {email}, Phone: {phone}");
+
         Id = Guid.NewGuid();
         Name = name;
         Email = email;
@@ -32,10 +35,14 @@ public class Customer : IEquatable<Customer>
         CustomerType = CustomerType.Standard;
         CustomerTier = CustomerTier.Bronze;
         _state = CustomerState.Created;
+
+        // Log the successful creation of a customer
+        Console.WriteLine($"Customer created with ID: {Id}");
     }
 
     public static Customer Create(string name, string email, string phone)
     {
+        // Validate input parameters
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Name is required", nameof(name));
         if (string.IsNullOrWhiteSpace(email))
@@ -43,11 +50,16 @@ public class Customer : IEquatable<Customer>
         if (string.IsNullOrWhiteSpace(phone))
             throw new ArgumentException("Phone is required", nameof(phone));
 
+        // Log the creation process
+        Console.WriteLine($"Creating customer with Name: {name}, Email: {email}, Phone: {phone}");
         return new Customer(name, email, phone);
     }
 
     public void Update(string name, string email, string phone, [CallerMemberName] string updatedBy = null)
     {
+        // Log the update process
+        Console.WriteLine($"Updating customer {Id} by {updatedBy}");
+
         ValidateStateTransition(CustomerState.Updated);
 
         Name = name;
@@ -56,11 +68,17 @@ public class Customer : IEquatable<Customer>
         UpdatedAt = DateTime.UtcNow;
         _state = CustomerState.Updated;
 
+        // Log the successful update
+        Console.WriteLine($"Customer {Id} updated successfully");
+
         AddAuditLog($"Customer updated by {updatedBy}", updatedBy);
     }
 
     public void Deactivate(string reason, [CallerMemberName] string deactivatedBy = null)
     {
+        // Log the deactivation process
+        Console.WriteLine($"Deactivating customer {Id} by {deactivatedBy} for reason: {reason}");
+
         ValidateStateTransition(CustomerState.Deactivated);
 
         IsActive = false;
@@ -69,11 +87,17 @@ public class Customer : IEquatable<Customer>
 
         _metadata.AddOrUpdate("DeactivationReason", reason, (_, _) => reason);
 
+        // Log the successful deactivation
+        Console.WriteLine($"Customer {Id} deactivated successfully");
+
         AddAuditLog($"Customer deactivated by {deactivatedBy}. Reason: {reason}", deactivatedBy);
     }
 
     public void AddMetadata(string key, object value, [CallerMemberName] string addedBy = null)
     {
+        // Log the metadata addition/update
+        Console.WriteLine($"Adding/updating metadata '{key}' for customer {Id} by {addedBy}");
+
         _metadata.AddOrUpdate(key, value, (_, _) => value);
 
         AddAuditLog($"Metadata '{key}' added/updated by {addedBy}", addedBy);
@@ -81,6 +105,9 @@ public class Customer : IEquatable<Customer>
 
     private void ValidateStateTransition(CustomerState newState)
     {
+        // Log the state transition validation
+        Console.WriteLine($"Validating state transition from {_state} to {newState} for customer {Id}");
+
         bool isValidTransition = _state switch
         {
             CustomerState.Created => true,
@@ -95,6 +122,9 @@ public class Customer : IEquatable<Customer>
 
     private void AddAuditLog(string message, string performedBy)
     {
+        // Log the addition of an audit log entry
+        Console.WriteLine($"Adding audit log for customer {Id}: {message}");
+
         _auditLogs.Add(new CustomerAuditLog(Id, message, DateTime.UtcNow, performedBy));
     }
 
