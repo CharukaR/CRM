@@ -5,13 +5,16 @@ namespace Customers.Infrastructure.Data;
 
 public class CustomersDbContext : DbContext
 {
-    public CustomersDbContext(DbContextOptions<CustomersDbContext> options) : base(options)
-    {
-    }
+    public CustomersDbContext(DbContextOptions<CustomersDbContext> options) : base(options) { }
 
     public DbSet<Customer> Customers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        ConfigureCustomerEntity(modelBuilder);
+    }
+
+    private void ConfigureCustomerEntity(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Customer>(entity =>
         {
@@ -21,4 +24,4 @@ public class CustomersDbContext : DbContext
             entity.Property(e => e.Phone).HasMaxLength(20);
         });
     }
-} 
+}
