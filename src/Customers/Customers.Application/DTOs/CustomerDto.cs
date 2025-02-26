@@ -8,4 +8,4 @@ public record CustomerDto(
     DateTime CreatedAt,
     DateTime? UpdatedAt,
     bool IsActive
-); 
+);
