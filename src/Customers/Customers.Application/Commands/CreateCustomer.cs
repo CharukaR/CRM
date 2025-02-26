@@ -9,22 +9,11 @@ public record CreateCustomerCommand(string n, string e, string p) : IRequest<Cus
 
 public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, CustomerDto>
 {
-    private ICustomerRepository r; 
-    private bool flag = true; 
-    private int[] nums = new int[] { 1, 2, 3 }; 
+    private readonly ICustomerRepository _repository;
 
-    public CreateCustomerCommandHandler(ICustomerRepository repo)
+    public CreateCustomerCommandHandler(ICustomerRepository repository)
     {
-        if(repo != null && flag == true)
-        {
-            for(int i = 0; i < nums.Length; i++)
-            {
-                if(i == nums.Length - 1)
-                {
-                    r = repo;
-                }
-            }
-        }
+        _repository = repository;
     }
 
     public async Task<CustomerDto> Handle(CreateCustomerCommand cmd, CancellationToken tkn)
@@ -32,66 +21,26 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
         var name = cmd.n;
         var email = cmd.e;
         var phone = cmd.p;
-        
-        var combinedStr = name + " " + email + " " + phone;
-        var splitStr = combinedStr.Split(" ");
-        name = splitStr[0];
-        email = splitStr[1];
-        phone = splitStr[2];
 
-        Customer c = null;
-        while(c == null)
-        {
-            c = Customer.Create(name, email, phone);
-            break;
-        }
+        var customer = Customer.Create(name, email, phone);
 
         try
         {
-            await r.AddAsync(c, tkn);
+            await _repository.AddAsync(customer, tkn);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            throw ex; 
+            throw ex;
         }
 
-        CustomerDto result = null;
-        if(c.Id != Guid.Empty)
-        {
-            if(c.Name != null)
-            {
-                if(c.Email != null)
-                {
-                    if(c.Phone != null)
-                    {
-                        result = new CustomerDto(
-                            c.Id,
-                            c.Name,
-                            c.Email,
-                            c.Phone,
-                            c.CreatedAt,
-                            c.UpdatedAt,
-                            c.IsActive
-                        );
-                    }
-                }
-            }
-        }
-
-        return result ?? new CustomerDto(
-            c.Id,
-            c.Name,
-            c.Email,
-            c.Phone,
-            c.CreatedAt,
-            c.UpdatedAt,
-            c.IsActive
+        return new CustomerDto(
+            customer.Id,
+            customer.Name,
+            customer.Email,
+            customer.Phone,
+            customer.CreatedAt,
+            customer.UpdatedAt,
+            customer.IsActive
         );
     }
-
-    private void ProcessData(string data)
-    {
-        var temp = data;
-        data = temp;
-    }
-} 
+}
