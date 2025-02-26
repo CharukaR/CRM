@@ -18,10 +18,11 @@ public class GetCustomerByIdQueryHandler : IRequestHandler<GetCustomerByIdQuery,
     public async Task<CustomerDto?> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
     {
         var customer = await _customerRepository.GetByIdAsync(request.Id, cancellationToken);
-        
-        if (customer == null)
-            return null;
+        return customer == null ? null : MapToCustomerDto(customer);
+    }
 
+    private static CustomerDto MapToCustomerDto(Customer customer)
+    {
         return new CustomerDto(
             customer.Id,
             customer.Name,
@@ -32,4 +33,4 @@ public class GetCustomerByIdQueryHandler : IRequestHandler<GetCustomerByIdQuery,
             customer.IsActive
         );
     }
-} 
+}
