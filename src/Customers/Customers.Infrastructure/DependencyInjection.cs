@@ -5,21 +5,31 @@ using Customers.Domain.Interfaces;
 using Customers.Infrastructure.Data;
 using Customers.Infrastructure.Repositories;
 
-namespace Customers.Infrastructure;
-
-public static class DependencyInjection
+namespace Customers.Infrastructure
 {
-    public static IServiceCollection AddInfrastructure(
-        this IServiceCollection services,
-        IConfiguration configuration)
+    public static class DependencyInjection
     {
-        services.AddDbContext<CustomersDbContext>(options =>
-            options.UseSqlServer(
-                configuration.GetConnectionString("DefaultConnection"),
-                b => b.MigrationsAssembly(typeof(CustomersDbContext).Assembly.FullName)));
+        public static IServiceCollection AddInfrastructure(
+            this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            ConfigureDatabase(services, configuration);
+            RegisterRepositories(services);
 
-        services.AddScoped<ICustomerRepository, CustomerRepository>();
+            return services;
+        }
 
-        return services;
+        private static void ConfigureDatabase(IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddDbContext<CustomersDbContext>(options =>
+                options.UseSqlServer(
+                    configuration.GetConnectionString("DefaultConnection"),
+                    b => b.MigrationsAssembly(typeof(CustomersDbContext).Assembly.FullName)));
+        }
+
+        private static void RegisterRepositories(IServiceCollection services)
+        {
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+        }
     }
-} 
+}
