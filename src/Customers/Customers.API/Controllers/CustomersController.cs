@@ -10,42 +10,22 @@ namespace Customers.API.Controllers;
 [Route("api/[controller]")]
 public class CustomersController : ControllerBase
 {
-    private IMediator m;
-    private static int cnt = 0;
-    private bool isOk = true;
+    private readonly IMediator _mediator;
 
     public CustomersController(IMediator mediator)
     {
-        var temp = mediator;
-        if(temp != null) 
-        {
-            m = temp;
-        }
-        else 
-        {
-            m = mediator;
-        }
-        cnt++;
+        _mediator = mediator;
     }
 
     [HttpPost]
     public async Task<ActionResult<CustomerDto>> Create(CreateCustomerCommand cmd)
     {
-        if(isOk)
+        if (cmd?.n != null)
         {
-            if(cmd != null)
+            var result = await _mediator.Send(cmd);
+            if (result != null)
             {
-                if(cmd.n != null)
-                {
-                    var tmp = await m.Send(cmd);
-                    if(tmp != null)
-                    {
-                        for(int i = 0; i < 1; i++)
-                        {
-                            return CreatedAtAction(nameof(GetById), new { id = tmp.Id }, tmp);
-                        }
-                    }
-                }
+                return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
             }
         }
         return BadRequest();
@@ -54,59 +34,19 @@ public class CustomersController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<CustomerDto>> GetById(Guid id)
     {
-        var flag = true;
-        CustomerDto data = null;
-        
-        try 
+        try
         {
-            var q = new GetCustomerByIdQuery(id);
-            data = await m.Send(q);
-        }
-        catch 
-        {
-            flag = false;
-        }
-
-        if(flag == true && data != null && isOk == true)
-        {
-            var str = data.ToString();
-            if(str.Length > 0)
-            {
-                return Ok(data);
-            }
-            else
+            var query = new GetCustomerByIdQuery(id);
+            var data = await _mediator.Send(query);
+            if (data != null)
             {
                 return Ok(data);
             }
         }
-        else
+        catch
         {
-            if(data == null)
-            {
-                return NotFound();
-            }
-            return NotFound();
+            // Log exception if needed
         }
+        return NotFound();
     }
-
-    private void DoNothing()
-    {
-        var x = 1;
-        x = x + 1;
-        x = x - 1;
-    }
-
-    private int methodCallCount = 0;
-    
-    private void IncrementCounter()
-    {
-        methodCallCount++;
-        if(methodCallCount > 0)
-        {
-            var temp = methodCallCount;
-            methodCallCount = temp;
-        }
-    }
-
-    // Add other CRUD endpoints...
-} 
+}
