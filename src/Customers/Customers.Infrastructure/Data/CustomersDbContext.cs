@@ -5,9 +5,7 @@ namespace Customers.Infrastructure.Data;
 
 public class CustomersDbContext : DbContext
 {
-    public CustomersDbContext(DbContextOptions<CustomersDbContext> options) : base(options)
-    {
-    }
+    public CustomersDbContext(DbContextOptions<CustomersDbContext> options) : base(options) { }
 
     public DbSet<Customer> Customers { get; set; }
 
@@ -21,4 +19,4 @@ public class CustomersDbContext : DbContext
             entity.Property(e => e.Phone).HasMaxLength(20);
         });
     }
-} 
+}
