@@ -13,6 +13,11 @@ public class CustomersDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        ConfigureCustomerEntity(modelBuilder);
+    }
+
+    private void ConfigureCustomerEntity(ModelBuilder modelBuilder)
+    {
         modelBuilder.Entity<Customer>(entity =>
         {
             entity.HasKey(e => e.Id);
@@ -21,4 +26,4 @@ public class CustomersDbContext : DbContext
             entity.Property(e => e.Phone).HasMaxLength(20);
         });
     }
-} 
+}
