@@ -19,10 +19,7 @@ public class GetCustomerByIdQueryHandler : IRequestHandler<GetCustomerByIdQuery,
     {
         var customer = await _customerRepository.GetByIdAsync(request.Id, cancellationToken);
         
-        if (customer == null)
-            return null;
-
-        return new CustomerDto(
+        return customer == null ? null : new CustomerDto(
             customer.Id,
             customer.Name,
             customer.Email,
@@ -32,4 +29,4 @@ public class GetCustomerByIdQueryHandler : IRequestHandler<GetCustomerByIdQuery,
             customer.IsActive
         );
     }
-} 
+}
