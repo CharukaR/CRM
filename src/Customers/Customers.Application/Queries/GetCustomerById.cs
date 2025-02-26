@@ -21,14 +21,21 @@ public class GetCustomerByIdQueryHandler : IRequestHandler<GetCustomerByIdQuery,
     // Method to handle the query and return a CustomerDto if found
     public async Task<CustomerDto?> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
     {
+        Console.WriteLine($"Handling GetCustomerByIdQuery for Customer ID: {request.Id}");
+
+        // Attempt to retrieve the customer from the repository
         var customer = await _customerRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (customer == null)
         {
+            Console.WriteLine($"Customer with ID: {request.Id} not found.");
             return null;
         }
 
-        return new CustomerDto(
+        Console.WriteLine($"Customer with ID: {request.Id} found. Preparing CustomerDto.");
+
+        // Map the customer entity to a CustomerDto
+        var customerDto = new CustomerDto(
             customer.Id,
             customer.Name,
             customer.Email,
@@ -37,5 +44,8 @@ public class GetCustomerByIdQueryHandler : IRequestHandler<GetCustomerByIdQuery,
             customer.UpdatedAt,
             customer.IsActive
         );
+
+        Console.WriteLine($"CustomerDto for Customer ID: {request.Id} prepared successfully.");
+        return customerDto;
     }
 }
