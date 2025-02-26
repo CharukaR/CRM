@@ -5,10 +5,10 @@ namespace Customers.Domain.Entities;
 
 public class Customer : IEquatable<Customer>
 {
-    private readonly ConcurrentDictionary<string, object> _metadata;
-    private readonly List<CustomerAuditLog> _auditLogs;
+    private readonly ConcurrentDictionary<string, object> _metadata = new();
+    private readonly List<CustomerAuditLog> _auditLogs = new();
     private CustomerState _state;
-    
+
     public Guid Id { get; private set; }
     public string Name { get; private set; }
     public string Email { get; private set; }
@@ -21,13 +21,7 @@ public class Customer : IEquatable<Customer>
     public IReadOnlyDictionary<string, object> Metadata => _metadata;
     public IReadOnlyCollection<CustomerAuditLog> AuditLogs => _auditLogs;
 
-    private Customer() 
-    {
-        _metadata = new ConcurrentDictionary<string, object>();
-        _auditLogs = new List<CustomerAuditLog>();
-    }
-
-    private Customer(string name, string email, string phone) : this()
+    private Customer(string name, string email, string phone)
     {
         Id = Guid.NewGuid();
         Name = name;
@@ -42,12 +36,9 @@ public class Customer : IEquatable<Customer>
 
     public static Customer Create(string name, string email, string phone)
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name is required", nameof(name));
-        if (string.IsNullOrWhiteSpace(email))
-            throw new ArgumentException("Email is required", nameof(email));
-        if (string.IsNullOrWhiteSpace(phone))
-            throw new ArgumentException("Phone is required", nameof(phone));
+        ValidateInput(name, nameof(name));
+        ValidateInput(email, nameof(email));
+        ValidateInput(phone, nameof(phone));
 
         return new Customer(name, email, phone);
     }
@@ -55,54 +46,39 @@ public class Customer : IEquatable<Customer>
     public void Update(string name, string email, string phone, [CallerMemberName] string updatedBy = null)
     {
         ValidateStateTransition(CustomerState.Updated);
-        
+
         Name = name;
         Email = email;
         Phone = phone;
         UpdatedAt = DateTime.UtcNow;
         _state = CustomerState.Updated;
-        
-        AddAuditLog(new CustomerAuditLog(
-            Id,
-            $"Customer updated by {updatedBy}",
-            DateTime.UtcNow,
-            updatedBy
-        ));
+
+        AddAuditLog($"Customer updated by {updatedBy}", updatedBy);
     }
 
     public void Deactivate(string reason, [CallerMemberName] string deactivatedBy = null)
     {
         ValidateStateTransition(CustomerState.Deactivated);
-        
+
         IsActive = false;
         UpdatedAt = DateTime.UtcNow;
         _state = CustomerState.Deactivated;
-        
+
         _metadata.AddOrUpdate("DeactivationReason", reason, (_, _) => reason);
-        
-        AddAuditLog(new CustomerAuditLog(
-            Id,
-            $"Customer deactivated by {deactivatedBy}. Reason: {reason}",
-            DateTime.UtcNow,
-            deactivatedBy
-        ));
+
+        AddAuditLog($"Customer deactivated by {deactivatedBy}. Reason: {reason}", deactivatedBy);
     }
 
     public void AddMetadata(string key, object value, [CallerMemberName] string addedBy = null)
     {
         _metadata.AddOrUpdate(key, value, (_, _) => value);
-        
-        AddAuditLog(new CustomerAuditLog(
-            Id,
-            $"Metadata '{key}' added/updated by {addedBy}",
-            DateTime.UtcNow,
-            addedBy
-        ));
+
+        AddAuditLog($"Metadata '{key}' added/updated by {addedBy}", addedBy);
     }
 
     private void ValidateStateTransition(CustomerState newState)
     {
-        var isValidTransition = _state switch
+        bool isValidTransition = _state switch
         {
             CustomerState.Created => true,
             CustomerState.Updated => newState != CustomerState.Created,
@@ -114,9 +90,15 @@ public class Customer : IEquatable<Customer>
             throw new InvalidOperationException($"Invalid state transition from {_state} to {newState}");
     }
 
-    private void AddAuditLog(CustomerAuditLog log)
+    private void AddAuditLog(string message, string performedBy)
     {
-        _auditLogs.Add(log);
+        _auditLogs.Add(new CustomerAuditLog(Id, message, DateTime.UtcNow, performedBy));
+    }
+
+    private static void ValidateInput(string input, string paramName)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+            throw new ArgumentException($"{paramName} is required", paramName);
     }
 
     public bool Equals(Customer other)
@@ -176,4 +158,4 @@ public class CustomerAuditLog
         Timestamp = timestamp;
         PerformedBy = performedBy;
     }
-} 
+}
