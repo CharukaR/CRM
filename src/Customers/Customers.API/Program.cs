@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Customers.Application.Commands;
 using Customers.Domain.Interfaces;
-using Customers.Infrastructure;
-using Customers.Infrastructure.Data;
 using Customers.Infrastructure.Repositories;
 using Microsoft.OpenApi.Models;
 
@@ -53,4 +51,4 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
-app.Run(); 
+app.Run();
