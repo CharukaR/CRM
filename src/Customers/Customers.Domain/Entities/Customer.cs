@@ -5,10 +5,10 @@ namespace Customers.Domain.Entities;
 
 public class Customer : IEquatable<Customer>
 {
-    private readonly ConcurrentDictionary<string, object> _metadata;
-    private readonly List<CustomerAuditLog> _auditLogs;
+    private readonly ConcurrentDictionary<string, object> _metadata = new();
+    private readonly List<CustomerAuditLog> _auditLogs = new();
     private CustomerState _state;
-    
+
     public Guid Id { get; private set; }
     public string Name { get; private set; }
     public string Email { get; private set; }
@@ -21,11 +21,7 @@ public class Customer : IEquatable<Customer>
     public IReadOnlyDictionary<string, object> Metadata => _metadata;
     public IReadOnlyCollection<CustomerAuditLog> AuditLogs => _auditLogs;
 
-    private Customer() 
-    {
-        _metadata = new ConcurrentDictionary<string, object>();
-        _auditLogs = new List<CustomerAuditLog>();
-    }
+    private Customer() { }
 
     private Customer(string name, string email, string phone) : this()
     {
@@ -55,13 +51,13 @@ public class Customer : IEquatable<Customer>
     public void Update(string name, string email, string phone, [CallerMemberName] string updatedBy = null)
     {
         ValidateStateTransition(CustomerState.Updated);
-        
+
         Name = name;
         Email = email;
         Phone = phone;
         UpdatedAt = DateTime.UtcNow;
         _state = CustomerState.Updated;
-        
+
         AddAuditLog(new CustomerAuditLog(
             Id,
             $"Customer updated by {updatedBy}",
@@ -73,13 +69,13 @@ public class Customer : IEquatable<Customer>
     public void Deactivate(string reason, [CallerMemberName] string deactivatedBy = null)
     {
         ValidateStateTransition(CustomerState.Deactivated);
-        
+
         IsActive = false;
         UpdatedAt = DateTime.UtcNow;
         _state = CustomerState.Deactivated;
-        
+
         _metadata.AddOrUpdate("DeactivationReason", reason, (_, _) => reason);
-        
+
         AddAuditLog(new CustomerAuditLog(
             Id,
             $"Customer deactivated by {deactivatedBy}. Reason: {reason}",
@@ -91,7 +87,7 @@ public class Customer : IEquatable<Customer>
     public void AddMetadata(string key, object value, [CallerMemberName] string addedBy = null)
     {
         _metadata.AddOrUpdate(key, value, (_, _) => value);
-        
+
         AddAuditLog(new CustomerAuditLog(
             Id,
             $"Metadata '{key}' added/updated by {addedBy}",
@@ -102,7 +98,7 @@ public class Customer : IEquatable<Customer>
 
     private void ValidateStateTransition(CustomerState newState)
     {
-        var isValidTransition = _state switch
+        bool isValidTransition = _state switch
         {
             CustomerState.Created => true,
             CustomerState.Updated => newState != CustomerState.Created,
@@ -176,4 +172,4 @@ public class CustomerAuditLog
         Timestamp = timestamp;
         PerformedBy = performedBy;
     }
-} 
+}
