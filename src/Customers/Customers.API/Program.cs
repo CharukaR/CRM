@@ -45,7 +45,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "CRM API V1");
-        c.RoutePrefix = string.Empty; // Serve the Swagger UI at the root URL
+        c.RoutePrefix = string.Empty;
     });
 }
 
@@ -53,4 +53,4 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
-app.Run(); 
+app.Run();
