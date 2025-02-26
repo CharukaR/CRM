@@ -7,7 +7,6 @@ namespace Customers.Infrastructure.Data
     {
         public CustomersDbContext(DbContextOptions<CustomersDbContext> options) : base(options)
         {
-            // Log the initialization of the CustomersDbContext with the provided options
             Console.WriteLine("Initializing CustomersDbContext with provided options.");
         }
 
@@ -15,32 +14,18 @@ namespace Customers.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Log the start of the model creation process
             Console.WriteLine("Starting OnModelCreating to configure the model.");
 
             modelBuilder.Entity<Customer>(entity =>
             {
-                // Log the configuration of the Customer entity
                 Console.WriteLine("Configuring Customer entity.");
 
                 entity.HasKey(e => e.Id);
-                // Log the setting of the primary key
-                Console.WriteLine("Set primary key for Customer entity.");
-
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(200);
-                // Log the configuration of the Name property
-                Console.WriteLine("Configured Name property: Required, MaxLength 200.");
-
                 entity.Property(e => e.Email).IsRequired().HasMaxLength(200);
-                // Log the configuration of the Email property
-                Console.WriteLine("Configured Email property: Required, MaxLength 200.");
-
                 entity.Property(e => e.Phone).HasMaxLength(20);
-                // Log the configuration of the Phone property
-                Console.WriteLine("Configured Phone property: MaxLength 20.");
             });
 
-            // Log the completion of the model creation process
             Console.WriteLine("Completed OnModelCreating.");
         }
     }
