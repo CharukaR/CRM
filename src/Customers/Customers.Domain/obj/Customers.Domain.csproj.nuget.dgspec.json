@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj": {}
+    "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj": {}
   },
   "projects": {
-    "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj": {
+    "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj",
+        "projectUniqueName": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj",
         "projectName": "Customers.Domain",
-        "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj",
+        "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj",
         "packagesPath": "C:\\Users\\CharukaR\\.nuget\\packages\\",
-        "outputPath": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Domain\\obj\\",
+        "outputPath": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\CharukaR\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -45,6 +45,24 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Logging.Console": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Logging.EventLog": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

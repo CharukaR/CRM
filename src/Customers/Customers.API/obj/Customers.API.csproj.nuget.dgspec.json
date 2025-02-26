@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.API\\Customers.API.csproj": {}
+    "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.API\\Customers.API.csproj": {}
   },
   "projects": {
-    "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.API\\Customers.API.csproj": {
+    "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.API\\Customers.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.API\\Customers.API.csproj",
+        "projectUniqueName": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.API\\Customers.API.csproj",
         "projectName": "Customers.API",
-        "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.API\\Customers.API.csproj",
+        "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.API\\Customers.API.csproj",
         "packagesPath": "C:\\Users\\CharukaR\\.nuget\\packages\\",
-        "outputPath": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.API\\obj\\",
+        "outputPath": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\CharukaR\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,11 +28,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Application\\Customers.Application.csproj": {
-                "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Application\\Customers.Application.csproj"
+              "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Application\\Customers.Application.csproj": {
+                "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Application\\Customers.Application.csproj"
               },
-              "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Infrastructure\\Customers.Infrastructure.csproj": {
-                "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Infrastructure\\Customers.Infrastructure.csproj"
+              "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Infrastructure\\Customers.Infrastructure.csproj": {
+                "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Infrastructure\\Customers.Infrastructure.csproj"
               }
             }
           }
@@ -56,6 +56,22 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Logging.Console": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Logging.EventLog": {
+              "target": "Package",
+              "version": "[9.0.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -85,14 +101,14 @@
         }
       }
     },
-    "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Application\\Customers.Application.csproj": {
+    "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Application\\Customers.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Application\\Customers.Application.csproj",
+        "projectUniqueName": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Application\\Customers.Application.csproj",
         "projectName": "Customers.Application",
-        "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Application\\Customers.Application.csproj",
+        "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Application\\Customers.Application.csproj",
         "packagesPath": "C:\\Users\\CharukaR\\.nuget\\packages\\",
-        "outputPath": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Application\\obj\\",
+        "outputPath": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\CharukaR\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -109,8 +125,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj": {
-                "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj"
+              "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj": {
+                "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj"
               }
             }
           }
@@ -145,7 +161,23 @@
             },
             "Microsoft.Extensions.DependencyInjection.Abstractions": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Logging.Console": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Logging.EventLog": {
+              "target": "Package",
+              "version": "[9.0.1, )"
             }
           },
           "imports": [
@@ -168,14 +200,14 @@
         }
       }
     },
-    "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj": {
+    "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj",
+        "projectUniqueName": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj",
         "projectName": "Customers.Domain",
-        "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj",
+        "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj",
         "packagesPath": "C:\\Users\\CharukaR\\.nuget\\packages\\",
-        "outputPath": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Domain\\obj\\",
+        "outputPath": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\CharukaR\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -209,6 +241,24 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Logging.Console": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Logging.EventLog": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -229,14 +279,14 @@
         }
       }
     },
-    "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Infrastructure\\Customers.Infrastructure.csproj": {
+    "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Infrastructure\\Customers.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Infrastructure\\Customers.Infrastructure.csproj",
+        "projectUniqueName": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Infrastructure\\Customers.Infrastructure.csproj",
         "projectName": "Customers.Infrastructure",
-        "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Infrastructure\\Customers.Infrastructure.csproj",
+        "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Infrastructure\\Customers.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\CharukaR\\.nuget\\packages\\",
-        "outputPath": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Infrastructure\\obj\\",
+        "outputPath": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\CharukaR\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -253,11 +303,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Application\\Customers.Application.csproj": {
-                "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Application\\Customers.Application.csproj"
+              "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Application\\Customers.Application.csproj": {
+                "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Application\\Customers.Application.csproj"
               },
-              "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj": {
-                "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\CRM\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj"
+              "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj": {
+                "projectPath": "C:\\pilot-projects\\Coding-Agents\\repos\\codius-test\\src\\Customers\\Customers.Domain\\Customers.Domain.csproj"
               }
             }
           }
@@ -284,11 +334,27 @@
             },
             "Microsoft.Extensions.Configuration.Abstractions": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[9.0.1, )"
             },
             "Microsoft.Extensions.DependencyInjection.Abstractions": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Logging.Console": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Logging.EventLog": {
+              "target": "Package",
+              "version": "[9.0.1, )"
             }
           },
           "imports": [

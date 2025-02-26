@@ -20,3 +20,16 @@ C:\pilot-projects\Coding-Agents\repos\CRM\src\Customers\Customers.Domain\obj\Deb
 C:\pilot-projects\Coding-Agents\repos\CRM\src\Customers\Customers.Domain\obj\Debug\net8.0\refint\Customers.Domain.dll
 C:\pilot-projects\Coding-Agents\repos\CRM\src\Customers\Customers.Domain\obj\Debug\net8.0\Customers.Domain.pdb
 C:\pilot-projects\Coding-Agents\repos\CRM\src\Customers\Customers.Domain\obj\Debug\net8.0\ref\Customers.Domain.dll
+C:\pilot-projects\Coding-Agents\repos\codius-test\src\Customers\Customers.Domain\bin\Debug\net8.0\Customers.Domain.deps.json
+C:\pilot-projects\Coding-Agents\repos\codius-test\src\Customers\Customers.Domain\bin\Debug\net8.0\Customers.Domain.dll
+C:\pilot-projects\Coding-Agents\repos\codius-test\src\Customers\Customers.Domain\bin\Debug\net8.0\Customers.Domain.pdb
+C:\pilot-projects\Coding-Agents\repos\codius-test\src\Customers\Customers.Domain\obj\Debug\net8.0\Customers.Domain.csproj.AssemblyReference.cache
+C:\pilot-projects\Coding-Agents\repos\codius-test\src\Customers\Customers.Domain\obj\Debug\net8.0\Customers.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\pilot-projects\Coding-Agents\repos\codius-test\src\Customers\Customers.Domain\obj\Debug\net8.0\Customers.Domain.AssemblyInfoInputs.cache
+C:\pilot-projects\Coding-Agents\repos\codius-test\src\Customers\Customers.Domain\obj\Debug\net8.0\Customers.Domain.AssemblyInfo.cs
+C:\pilot-projects\Coding-Agents\repos\codius-test\src\Customers\Customers.Domain\obj\Debug\net8.0\Customers.Domain.csproj.CoreCompileInputs.cache
+C:\pilot-projects\Coding-Agents\repos\codius-test\src\Customers\Customers.Domain\obj\Debug\net8.0\Customers.Domain.sourcelink.json
+C:\pilot-projects\Coding-Agents\repos\codius-test\src\Customers\Customers.Domain\obj\Debug\net8.0\Customers.Domain.dll
+C:\pilot-projects\Coding-Agents\repos\codius-test\src\Customers\Customers.Domain\obj\Debug\net8.0\refint\Customers.Domain.dll
+C:\pilot-projects\Coding-Agents\repos\codius-test\src\Customers\Customers.Domain\obj\Debug\net8.0\Customers.Domain.pdb
+C:\pilot-projects\Coding-Agents\repos\codius-test\src\Customers\Customers.Domain\obj\Debug\net8.0\ref\Customers.Domain.dll
