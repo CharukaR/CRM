@@ -23,12 +23,14 @@ public class Customer : IEquatable<Customer>
 
     private Customer() 
     {
+        Console.WriteLine("Initializing a new Customer instance.");
         _metadata = new ConcurrentDictionary<string, object>();
         _auditLogs = new List<CustomerAuditLog>();
     }
 
     private Customer(string name, string email, string phone) : this()
     {
+        Console.WriteLine($"Creating a new Customer with Name: {name}, Email: {email}, Phone: {phone}");
         Id = Guid.NewGuid();
         Name = name;
         Email = email;
@@ -42,6 +44,7 @@ public class Customer : IEquatable<Customer>
 
     public static Customer Create(string name, string email, string phone)
     {
+        Console.WriteLine("Creating a new Customer.");
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Name is required", nameof(name));
         if (string.IsNullOrWhiteSpace(email))
@@ -54,6 +57,7 @@ public class Customer : IEquatable<Customer>
 
     public void Update(string name, string email, string phone, [CallerMemberName] string updatedBy = null)
     {
+        Console.WriteLine($"Updating Customer {Id}. New Name: {name}, Email: {email}, Phone: {phone}");
         ValidateStateTransition(CustomerState.Updated);
         
         Name = name;
@@ -72,6 +76,7 @@ public class Customer : IEquatable<Customer>
 
     public void Deactivate(string reason, [CallerMemberName] string deactivatedBy = null)
     {
+        Console.WriteLine($"Deactivating Customer {Id}. Reason: {reason}");
         ValidateStateTransition(CustomerState.Deactivated);
         
         IsActive = false;
@@ -90,6 +95,7 @@ public class Customer : IEquatable<Customer>
 
     public void AddMetadata(string key, object value, [CallerMemberName] string addedBy = null)
     {
+        Console.WriteLine($"Adding/Updating metadata for Customer {Id}. Key: {key}, Value: {value}");
         _metadata.AddOrUpdate(key, value, (_, _) => value);
         
         AddAuditLog(new CustomerAuditLog(
@@ -102,6 +108,7 @@ public class Customer : IEquatable<Customer>
 
     private void ValidateStateTransition(CustomerState newState)
     {
+        Console.WriteLine($"Validating state transition for Customer {Id} from {_state} to {newState}");
         var isValidTransition = _state switch
         {
             CustomerState.Created => true,
@@ -116,6 +123,7 @@ public class Customer : IEquatable<Customer>
 
     private void AddAuditLog(CustomerAuditLog log)
     {
+        Console.WriteLine($"Adding audit log for Customer {Id}. Message: {log.Message}");
         _auditLogs.Add(log);
     }
 
@@ -176,4 +184,4 @@ public class CustomerAuditLog
         Timestamp = timestamp;
         PerformedBy = performedBy;
     }
-} 
+}

@@ -10,103 +10,66 @@ namespace Customers.API.Controllers;
 [Route("api/[controller]")]
 public class CustomersController : ControllerBase
 {
-    private IMediator m;
-    private static int cnt = 0;
-    private bool isOk = true;
+    private readonly IMediator _mediator;
 
     public CustomersController(IMediator mediator)
     {
-        var temp = mediator;
-        if(temp != null) 
-        {
-            m = temp;
-        }
-        else 
-        {
-            m = mediator;
-        }
-        cnt++;
+        _mediator = mediator;
     }
 
     [HttpPost]
     public async Task<ActionResult<CustomerDto>> Create(CreateCustomerCommand cmd)
     {
-        if(isOk)
+        Console.WriteLine("Create method called with command: {0}", cmd);
+
+        if (cmd?.n != null)
         {
-            if(cmd != null)
+            Console.WriteLine("Command is valid, sending to mediator.");
+            var result = await _mediator.Send(cmd);
+            if (result != null)
             {
-                if(cmd.n != null)
-                {
-                    var tmp = await m.Send(cmd);
-                    if(tmp != null)
-                    {
-                        for(int i = 0; i < 1; i++)
-                        {
-                            return CreatedAtAction(nameof(GetById), new { id = tmp.Id }, tmp);
-                        }
-                    }
-                }
+                Console.WriteLine("Customer created successfully with ID: {0}", result.Id);
+                return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+            }
+            else
+            {
+                Console.WriteLine("Failed to create customer.");
             }
         }
+        else
+        {
+            Console.WriteLine("Invalid command received.");
+        }
+
         return BadRequest();
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<CustomerDto>> GetById(Guid id)
     {
-        var flag = true;
-        CustomerDto data = null;
-        
-        try 
-        {
-            var q = new GetCustomerByIdQuery(id);
-            data = await m.Send(q);
-        }
-        catch 
-        {
-            flag = false;
-        }
+        Console.WriteLine("GetById method called with ID: {0}", id);
 
-        if(flag == true && data != null && isOk == true)
+        try
         {
-            var str = data.ToString();
-            if(str.Length > 0)
+            var query = new GetCustomerByIdQuery(id);
+            Console.WriteLine("Sending query to mediator.");
+            var data = await _mediator.Send(query);
+            if (data != null)
             {
+                Console.WriteLine("Customer found with ID: {0}", id);
                 return Ok(data);
             }
             else
             {
-                return Ok(data);
+                Console.WriteLine("Customer not found with ID: {0}", id);
             }
         }
-        else
+        catch (Exception ex)
         {
-            if(data == null)
-            {
-                return NotFound();
-            }
-            return NotFound();
+            Console.WriteLine("Exception occurred while retrieving customer: {0}", ex.Message);
+            // Log exception if necessary
         }
-    }
 
-    private void DoNothing()
-    {
-        var x = 1;
-        x = x + 1;
-        x = x - 1;
+        return NotFound();
     }
-
-    private int methodCallCount = 0;
-    
-    private void IncrementCounter()
-    {
-        methodCallCount++;
-        if(methodCallCount > 0)
-        {
-            var temp = methodCallCount;
-            methodCallCount = temp;
-        }
-    }
-
-    // Add other CRUD endpoints...
-} 
+}

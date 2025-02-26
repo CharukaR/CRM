@@ -5,21 +5,30 @@ using Customers.Domain.Interfaces;
 using Customers.Infrastructure.Data;
 using Customers.Infrastructure.Repositories;
 
-namespace Customers.Infrastructure;
-
-public static class DependencyInjection
+namespace Customers.Infrastructure
 {
-    public static IServiceCollection AddInfrastructure(
-        this IServiceCollection services,
-        IConfiguration configuration)
+    public static class DependencyInjection
     {
-        services.AddDbContext<CustomersDbContext>(options =>
-            options.UseSqlServer(
-                configuration.GetConnectionString("DefaultConnection"),
-                b => b.MigrationsAssembly(typeof(CustomersDbContext).Assembly.FullName)));
+        // Method to add infrastructure services to the IServiceCollection
+        public static IServiceCollection AddInfrastructure(
+            this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            Console.WriteLine("Starting AddInfrastructure method.");
 
-        services.AddScoped<ICustomerRepository, CustomerRepository>();
+            // Configure the DbContext with SQL Server and set the migrations assembly
+            Console.WriteLine("Configuring DbContext with SQL Server.");
+            services.AddDbContext<CustomersDbContext>(options =>
+                options.UseSqlServer(
+                    configuration.GetConnectionString("DefaultConnection"),
+                    b => b.MigrationsAssembly(typeof(CustomersDbContext).Assembly.FullName)));
 
-        return services;
+            // Register the CustomerRepository as a scoped service
+            Console.WriteLine("Registering ICustomerRepository with CustomerRepository.");
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+            Console.WriteLine("AddInfrastructure method completed.");
+            return services;
+        }
     }
-} 
+}
