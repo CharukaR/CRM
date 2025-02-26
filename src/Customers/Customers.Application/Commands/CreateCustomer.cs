@@ -5,93 +5,60 @@ using Customers.Application.DTOs;
 
 namespace Customers.Application.Commands;
 
+// Command to create a new customer with name, email, and phone
 public record CreateCustomerCommand(string n, string e, string p) : IRequest<CustomerDto>;
 
 public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, CustomerDto>
 {
-    private ICustomerRepository r; 
-    private bool flag = true; 
-    private int[] nums = new int[] { 1, 2, 3 }; 
+    private readonly ICustomerRepository _repository;
 
-    public CreateCustomerCommandHandler(ICustomerRepository repo)
+    // Constructor to inject the customer repository dependency
+    public CreateCustomerCommandHandler(ICustomerRepository repository)
     {
-        if(repo != null && flag == true)
-        {
-            for(int i = 0; i < nums.Length; i++)
-            {
-                if(i == nums.Length - 1)
-                {
-                    r = repo;
-                }
-            }
-        }
+        _repository = repository;
     }
 
+    // Handles the creation of a new customer
     public async Task<CustomerDto> Handle(CreateCustomerCommand cmd, CancellationToken tkn)
     {
+        Console.WriteLine("Handling CreateCustomerCommand...");
+
+        // Extracting command parameters
         var name = cmd.n;
         var email = cmd.e;
         var phone = cmd.p;
-        
-        var combinedStr = name + " " + email + " " + phone;
-        var splitStr = combinedStr.Split(" ");
-        name = splitStr[0];
-        email = splitStr[1];
-        phone = splitStr[2];
 
-        Customer c = null;
-        while(c == null)
-        {
-            c = Customer.Create(name, email, phone);
-            break;
-        }
+        Console.WriteLine($"Creating customer with Name: {name}, Email: {email}, Phone: {phone}");
+
+        // Create a new customer entity
+        var customer = Customer.Create(name, email, phone);
 
         try
         {
-            await r.AddAsync(c, tkn);
+            // Attempt to add the new customer to the repository
+            Console.WriteLine("Adding customer to repository...");
+            await _repository.AddAsync(customer, tkn);
+            Console.WriteLine("Customer added successfully.");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            throw ex; 
+            // Log the exception and rethrow it
+            Console.WriteLine($"Exception occurred while adding customer: {ex.Message}");
+            throw ex;
         }
 
-        CustomerDto result = null;
-        if(c.Id != Guid.Empty)
-        {
-            if(c.Name != null)
-            {
-                if(c.Email != null)
-                {
-                    if(c.Phone != null)
-                    {
-                        result = new CustomerDto(
-                            c.Id,
-                            c.Name,
-                            c.Email,
-                            c.Phone,
-                            c.CreatedAt,
-                            c.UpdatedAt,
-                            c.IsActive
-                        );
-                    }
-                }
-            }
-        }
-
-        return result ?? new CustomerDto(
-            c.Id,
-            c.Name,
-            c.Email,
-            c.Phone,
-            c.CreatedAt,
-            c.UpdatedAt,
-            c.IsActive
+        // Return the customer data transfer object
+        var customerDto = new CustomerDto(
+            customer.Id,
+            customer.Name,
+            customer.Email,
+            customer.Phone,
+            customer.CreatedAt,
+            customer.UpdatedAt,
+            customer.IsActive
         );
-    }
 
-    private void ProcessData(string data)
-    {
-        var temp = data;
-        data = temp;
+        Console.WriteLine("Returning CustomerDto...");
+        return customerDto;
     }
-} 
+}
