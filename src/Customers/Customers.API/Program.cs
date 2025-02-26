@@ -12,24 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 // Configure Swagger
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "CRM API",
-        Version = "v1",
-        Description = "API for managing customers in the CRM system",
-        Contact = new OpenApiContact
-        {
-            Name = "CRM Support",
-            Email = "support@crm.com"
-        }
-    });
-});
+ConfigureSwagger(builder.Services);
 
 // Add DbContext
-builder.Services.AddDbContext<CustomersDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+ConfigureDbContext(builder.Services, builder.Configuration);
 
 // Add MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCustomerCommand).Assembly));
@@ -41,6 +27,41 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    ConfigureSwaggerUI(app);
+}
+
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
+
+app.Run();
+
+void ConfigureSwagger(IServiceCollection services)
+{
+    services.AddSwaggerGen(c =>
+    {
+        c.SwaggerDoc("v1", new OpenApiInfo
+        {
+            Title = "CRM API",
+            Version = "v1",
+            Description = "API for managing customers in the CRM system",
+            Contact = new OpenApiContact
+            {
+                Name = "CRM Support",
+                Email = "support@crm.com"
+            }
+        });
+    });
+}
+
+void ConfigureDbContext(IServiceCollection services, IConfiguration configuration)
+{
+    services.AddDbContext<CustomersDbContext>(options =>
+        options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+}
+
+void ConfigureSwaggerUI(WebApplication app)
+{
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
@@ -48,9 +69,3 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty; // Serve the Swagger UI at the root URL
     });
 }
-
-app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();
-
-app.Run(); 
